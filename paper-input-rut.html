@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="rut-input.html">
+<!--
+`paper-input-rut`
+A rut verifier input
+
+@demo demo/index.html 
+-->
+
+
+<dom-module id="paper-input-rut">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-input-container always-float-label auto-validate attr-for-value="value">
+      <label>[[label]]</label>
+      <rut-input class="paper-input-input"></rut-input>
+      <paper-input-error>[[errorMessage]]</paper-input-error>
+    </paper-input-container>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'paper-input-rut',
+
+      properties:{
+        label: {
+          type: String,
+          value: 'RUT'
+        },
+
+        errorMessage:{
+          type: String
+        }
+      }
+
+    });
+  </script>
+</dom-module>
