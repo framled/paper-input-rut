@@ -1,4 +1,4 @@
-# \<paper-input-rut\>
+# \<paper-rut-input\>
 
 A rut paper input field with a RUT validator
 
@@ -39,5 +39,5 @@ Your application is already set up to be tested via [web-component-tester](https
 
 ##Examples
 ```
-<paper-input-rut label="RUT" error-message="invalid rut!"></paper-input-rut>
+<paper-rut-input label="RUT" error-message="invalid rut!"></paper-rut-input>
 ```
