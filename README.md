@@ -39,5 +39,5 @@ Your application is already set up to be tested via [web-component-tester](https
 
 ##Examples
 ```
-<paper-rut-input label="RUT" error-message="invalid rut!"></paper-rut-input>
+<paper-rut-input label="RUT" error-message="invalid rut!" auto-validate></paper-rut-input>
 ```
