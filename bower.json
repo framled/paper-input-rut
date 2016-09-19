@@ -1,7 +1,7 @@
 {
   "name": "paper-rut-input",
   "description": "A rut paper input field with a validator",
-  "version":"1.0.4",
+  "version":"1.0.5",
   "main": "paper-rut-input.html",
   "authors": [
     "Felipe Narvaez <fn.narvaezmichea@gmail.com>"
