@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+		<title>paper-rut-input demo</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+		<link rel="import" href="../paper-rut-input.html">
+		<link rel="import" href="../../paper-button/paper-button.html">
+
+		<link rel="import" href="../../iron-form/iron-form.html">
+
+		<style is="custom-style" include="demo-pages-shared-styles">
+		</style>
+	</head>
+	<body>
+
+		<div class="vertical-section-container centered">
+			<h3>Basic paper-rut-input Demo</h3>
+			<demo-snippet>
+				<template>
+					<paper-rut-input 
+						label="RUT" 
+						error-message="rut invalid!" 
+						required 
+						auto-validate>
+					</paper-rut-input>
+						
+				</template>
+			</demo-snippet>
+			
+			<h3>Usage with iron-form</h3>
+			<demo-snippet>
+				<template>
+					<form is="iron-form" id="form">
+						<paper-rut-input 
+							name="rut"
+							label="RUT" 
+							error-message="rut invalid!" 
+							required 
+							auto-validate>
+						</paper-rut-input>
+
+						<paper-button raised onclick="_submit(event)">
+							submit
+						</paper-button>
+					</form>
+					<script>
+						function _submit(event) {
+            	Polymer.dom(event).localTarget.parentElement.submit();
+          	}
+					</script>
+				</template>
+			</demo-snippet>
+		</div>
+	</body>
+</html>

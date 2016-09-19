@@ -1,0 +1,135 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+
+<link rel="import" href="rut-input.html">
+<!--
+`paper-rut-input`
+A rut verifier input
+
+@demo demo/index.html 
+-->
+
+
+<dom-module id="paper-rut-input">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+		</style>
+		<paper-input-container 
+			attr-for-value="value"
+			disabled$="[[disabled]]"
+			no-label-float="[[noLabelFloat]]"
+			always-float-label="[[alwaysFloatLabel]]"
+			invalid="[[invalid]]">
+
+			<label hidden$="[[!label]]">[[label]]</label>
+			
+			<rut-input class="paper-input-input"
+				id="input"
+				aria-label-prefix="[[_ariaLabelledBy]]"
+				required$="[[required]]"
+				autocomplete$="[[autocomplete]]"
+				disabled$="[[disabled]]"
+				invalid="{{invalid}}"
+				autofocus$="[[autofocus]]"
+				placeholder$="[[placeholder]]"
+				readonly$="[[readonly]]">
+			</rut-input>
+				
+
+			<template is="dom-if" if="[[errorMessage]]">
+				<paper-input-error>[[errorMessage]]</paper-input-error>
+			</template>
+
+		</paper-input-container>
+	</template>
+
+	<script>
+		(function() {
+      Polymer({
+
+				is: 'paper-rut-input',
+
+				/* The underlying dateInput is tabbable */
+				hostAttributes: {
+					'tabindex': -1
+				},
+					
+				behaviors: [
+					Polymer.PaperInputBehavior,
+					Polymer.IronFormElementBehavior
+				],
+
+				properties:{
+
+					value: {
+						type: String,
+						value: '',
+						observer: '_onValueChanged'
+					},
+
+					/**
+					 * The label for this input
+					 */
+					label: {
+						type: String,
+						value: 'RUT'
+					}
+				},
+
+
+				listeners: {
+					'rutChanged': '_rutChanged'
+				},
+
+				observers: [
+					'_onFocusedChanged(focused)'
+				],
+
+				ready: function() {
+					// If there's an initial input, validate it.
+					if (this.value)
+						this._handleAutoValidate();
+				},
+				/**
+				 * A handler that is called on input
+				 */
+				_onValueChanged: function(value, oldValue) {
+					// The initial property assignment is handled by `ready`.
+					if (oldValue == undefined)
+						return;
+					this._handleAutoValidate();
+				},
+
+				_rutChanged: function(event) {
+					if (event.detail.rut && event.detail.checker) {
+						this.value = event.detail.rut + '-' + event.detail.checker;
+					}
+				},
+				/**
+				 * Overidden from Polymer.PaperInputBehavior.
+				 */
+				validate: function() {
+					return this.$.input.validate();
+				},
+				/**
+				 * Overidden from Polymer.IronControlState.
+				 */
+				_onFocusedChanged: function(focused) {
+					if (!focused) {
+						this._handleAutoValidate();
+					}
+				}
+
+			})
+    })();
+	</script>
+</dom-module>

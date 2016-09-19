@@ -1,0 +1,191 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+
+<link rel="import" href="rut-validator.html">
+
+<dom-module id="rut-input">
+	<template>
+
+		<style>
+			:host {
+				display: inline-block;
+			}
+
+			:host([hidden]) {
+				display: none !important;
+			}
+
+			span {
+				@apply(--paper-input-container-font);
+				opacity: 0.33;
+				text-align: center;
+			}
+
+			input[is="iron-input"] {
+				font: inherit;
+				outline: none;
+				box-shadow: none;
+				border: none;
+				width: auto;
+				text-align: center;
+			}
+
+			input[is="iron-input"]:nth-child(1){
+				@apply(--layout-flex);
+				@apply(--paper-font-subhead);
+				@apply(--paper-input-container-input);
+			}
+
+			input[is="iron-input"]:nth-child(3){
+				min-width: 2em;
+			}
+
+			.container {
+				@apply(--layout-horizontal);
+			}
+
+			input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		</style>
+
+		<rut-validator id="validator"></rut-validator>
+		
+		<span aria-hidden id="rutLabel" hidden>Rut</span>
+		<span aria-hidden id="checkerLabel" hidden>Checker</span>
+
+		<div class="container">
+
+			<input is="iron-input"
+				type="number" 
+				maxlength="8" 
+				bind-value="{{rut}}" 
+				size="8" 
+				aria-label="rut"
+				aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'rutLabel')]]"
+				required$="[[required]]"
+				placeholder="12345678"
+				prevent-invalid-input
+				disabled$="[[disabled]]"
+				invalid="{{invalid}}"
+				autofocus$="[[autofocus]]"
+				readonly$="[[readonly]]">
+
+			<span>-</span>
+
+			<input is="iron-input"
+				id="checkerInput"
+				maxlength="1" 
+				bind-value="{{checker}}" 
+				size="1" 
+				aria-label="checker"
+				maxlength="1" 
+				aria-label="checker"
+				aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'checkerLabel')]]"
+				required$="[[required]]"
+				placeholder="9"
+				prevent-invalid-input
+				disabled$="[[disabled]]"
+				invalid="{{invalid}}"
+				autofocus$="[[autofocus]]"
+				readonly$="[[readonly]]">
+
+		</div>
+
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'rut-input',
+
+		behaviors: [
+			Polymer.IronA11yKeysBehavior,
+			Polymer.IronValidatableBehavior
+		],
+
+		properties: {
+
+			value: {
+				notify: true,
+				type: String
+			},
+
+			rut: {
+				type: String
+			},
+
+			checker: {
+				type: String
+			},
+
+			validator: {
+				type: String,
+				value: 'rut-validator'
+			},
+
+			required: {
+				type: Boolean,
+				value: false
+			},
+
+			ariaLabelPrefix: {
+				type:String
+			},
+
+			/**
+			 * Set to true to disable the rut and check digit input elements.
+			 */
+			disabled: {
+				type: Boolean,
+				value: false
+			},
+			/**
+			 * Set to true to autofocus the rut input element.
+			 */
+			autofocus: {
+				type: Boolean
+			},
+
+			/**
+			 * Set to true to mark the rut and check digit inputs as not editable.
+			 */
+			readonly: {
+				type: Boolean,
+				value: false
+			}
+		},
+
+		observers: [
+			'_computeValue(rut , checker)'
+		],
+
+		_computeValue: function(rut, checker) {
+			this.value = rut.trim() + '-' + checker.trim();
+			this.fire('rutChanged', {rut: rut, checker: checker});
+
+			if(rut.length >= 8){
+				this.$.checkerInput.focus();
+			}
+		},
+
+		_computeAriaLabel: function(rutLabel, checkerLabel) {
+			return rutLabel + ' ' +  checkerLabel;
+		},
+
+		validate: function(){
+			// Empty, non-required input is valid.
+			if (!this.required && this.rut == '' && this.checker == '') {
+				return true;
+			}
+			this.invalid = !this.$.validator.validate(this.value);
+			this.fire('iron-input-validate');
+			return !this.invalid;
+		}
+
+	});
+</script>
