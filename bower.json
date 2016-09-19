@@ -1,7 +1,7 @@
 {
   "name": "paper-rut-input",
   "description": "A rut paper input field with a validator",
-  "version":"1.0.5",
+  "version":"1.0.6",
   "main": "paper-rut-input.html",
   "authors": [
     "Felipe Narvaez <fn.narvaezmichea@gmail.com>"
@@ -16,7 +16,7 @@
     "paper-input",
     "rut"
   ],
-  "homepage": "https://github.com/framled/paper-rut-input",
+  "homepage": "https://framled.github.io/paper-rut-input/components/paper-rut-input/",
   "ignore": [],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
