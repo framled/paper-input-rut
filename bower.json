@@ -1,14 +1,14 @@
 {
   "name": "paper-rut-input",
   "description": "A rut paper input field with a validator",
-  "version":"1.0.6",
+  "version":"1.0.7",
   "main": "paper-rut-input.html",
   "authors": [
     "Felipe Narvaez <fn.narvaezmichea@gmail.com>"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/framled/paper-rut-input"
+    "url": "https://github.com/framled/paper-rut-input"
   },
   "keywords": [
     "web-components",
